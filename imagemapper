@@ -27,7 +27,8 @@ while ( have_rows('main_features') ) {
 		 <h5>
 		
 		</h5>
-  
+  // *this adds an image to one of the pop ups
+  TO DO - figure out how to make this work on multiple pop ups */
 	<img class="descimg" style="display:inline-block;z-index:9999;position:relative;padding-bottom:5px;">
 		
 	  <span>
