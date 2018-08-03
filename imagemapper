@@ -10,7 +10,8 @@
 	$image = get_field('expimage'); ?>
 
 	<img class='test' style='display:inline-block;' src='<?php echo $image ?>'>
-	<?php $count = 1;
+// *adding $count means that more than one of these spots can be mapped*/
+<?php $count = 1;
 while ( have_rows('main_features') ) {
 	the_row();
 	$icon = get_sub_field('icon');
@@ -31,9 +32,6 @@ while ( have_rows('main_features') ) {
   TO DO - figure out how to make this work on multiple pop ups */
 	<img class="descimg" style="display:inline-block;z-index:9999;position:relative;padding-bottom:5px;">
 		
-	  <span>
-		
-		</span>
 		
 		</div>
 		<script type="text/javascript">
@@ -78,13 +76,14 @@ left: (offset.left - percentLeft) + "px",
 //  *hide info element on mouseout*/
   $('.content').css({'display':'none'});
 $('.content img').removeAttr('src');
-// *this stops the image from jumping to the initial point */
+// *removeAttr stops the image from jumping to the initial point */
 }
 	
 }
  
 
 </script>
+// *adding $count++ restarts the loop*/
 	<?php $count++ ?>
 <?php } ?>
 	
