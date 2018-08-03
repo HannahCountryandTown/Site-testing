@@ -1,0 +1,89 @@
+ // This is a piece of code to create a PHP image mapper that works with the Advanced Custom Fields add on plugin Image Hotspots
+// This allows users to upload an image and maps the coordinates accordingly
+// Users can also upload small image files to act as icons for the pop up
+ 
+ <?php
+
+	$image = get_field('expimage'); ?>
+
+	<img class='test' style='display:inline-block;' src='<?php echo $image ?>'>
+	<?php $count = 1;
+while ( have_rows('main_features') ) {
+	the_row();
+	$icon = get_sub_field('icon');
+	$descimage = get_sub_field('description_image');
+	$coords = explode( ',', get_sub_field('coordinates')) ;
+	$title  = get_sub_field('title');
+	$desc   = get_sub_field('description', false, false); 
+		 
+	?>
+	
+	<button id='mapbutton-<?php echo $count ?>' style='background-image:url("<?php echo $icon ?>");background-size:contain;width:30px;height:30px;left:<?php echo $coords[0]?>;top:<?php echo $coords[1]?>;position:absolute;' data-title='<?php echo $title ?>' data-info='<?php echo $desc;?>' <?php if (get_sub_field('description_image')){ ?> data-image='<?php echo $descimage;?>' <?php } ?>> </button>
+	<div class='content' style='z-index:999;position:absolute;color:white;display:none;'>
+	   
+		 <h5>
+		
+		</h5>
+  
+	<img class="descimg" style="display:inline-block;z-index:9999;position:relative;padding-bottom:5px;">
+		
+	  <span>
+		
+		</span>
+		
+		</div>
+		<script type="text/javascript">
+	
+	$('#mapbutton-<?php echo $count?>').hover(function() {
+var title = $(this).attr('data-title');
+var info  = $(this).attr('data-info');
+		var image = $(this).attr('data-image');
+$('.content h5').text( title );
+$('.content span').text( info );
+		$('.descimg').attr("src",image)
+	// $(".content").css('left':left),
+	
+			 }
+	);
+
+	$(document).ready(function(){
+/*the function showInfo is executed on mouseover and mouseout*/
+$('#mapbutton-<?php echo $count?>').hover(function(event) {
+	showInfo(event,this);
+});
+});
+function showInfo(event, button)
+{
+/*if the event is mouseover*/
+if (event.type=="mouseenter"){
+var offset = $(button).offset();	
+/*get the top Position of the info element. $(window).scrollTop() is used to calculate the right top coordinate of the button element after the window is scrolled*/
+var topOffset = $(button).offset().top- $(window).scrollTop();
+var position = $(button).position();
+var percentLeft = position.left/$('.con').width() * 100;
+var percentTop = position.top/$(window).height() *100;
+  /*set the position of the info element*/
+	 $(".content").css({
+		 display: "block",
+		  position: "fixed",
+//left: (percentLeft) + "%",
+       top: (topOffset + 35)+ "px",
+   
+left: (offset.left - percentLeft) + "px",
+//left: (offset.left - hpercent) + "px",
+    });
+	//$('.content img').addClass('descimg');
+}
+  else {
+//  *hide info element on mouseout*/
+  $('.content').css({'display':'none'});
+$('.content img').removeAttr('src');
+}
+	
+}
+ 
+
+</script>
+	<?php $count++ ?>
+<?php } ?>
+	
