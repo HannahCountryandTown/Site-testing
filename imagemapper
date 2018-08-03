@@ -2,6 +2,9 @@
 // This allows users to upload an image and maps the coordinates accordingly
 // Users can also upload small image files to act as icons for the pop up
  
+ 	
+<div id="imagemap">
+<div class="con">
  <?php
 
 	$image = get_field('expimage'); ?>
@@ -41,7 +44,7 @@ var info  = $(this).attr('data-info');
 $('.content h5').text( title );
 $('.content span').text( info );
 		$('.descimg').attr("src",image)
-	// $(".content").css('left':left),
+	
 	
 			 }
 	);
@@ -60,24 +63,21 @@ var offset = $(button).offset();
 /*get the top Position of the info element. $(window).scrollTop() is used to calculate the right top coordinate of the button element after the window is scrolled*/
 var topOffset = $(button).offset().top- $(window).scrollTop();
 var position = $(button).position();
-var percentLeft = position.left/$('.con').width() * 100;
 var percentTop = position.top/$(window).height() *100;
   /*set the position of the info element*/
 	 $(".content").css({
 		 display: "block",
 		  position: "fixed",
-//left: (percentLeft) + "%",
        top: (topOffset + 35)+ "px",
    
 left: (offset.left - percentLeft) + "px",
-//left: (offset.left - hpercent) + "px",
     });
-	//$('.content img').addClass('descimg');
 }
   else {
 //  *hide info element on mouseout*/
   $('.content').css({'display':'none'});
 $('.content img').removeAttr('src');
+// *this stops the image from jumping to the initial point */
 }
 	
 }
